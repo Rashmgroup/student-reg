@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Container styling */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4caf50;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        /* Section header styling */
+        h2 {
+            margin-top: 20px;
+            color: #333;
+            font-size: 24px;
+            text-decoration: underline;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #555;
+        }
+
+        /* Image styling */
+        img {
+            border-radius: 8px;
+            margin-top: 10px;
+            max-width: 150px;
+            display: block;
+        }
+
+        /* Document links styling */
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Input fields and labels */
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <h1>Registration Successful!</h1>
+
+        <h2>Personal Information</h2>
+        <p><strong>Name:</strong> <span id="fullName"></span></p>
+        <p><strong>Father's Name:</strong> <span id="fatherName"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p><strong>Address:</strong> <span id="address"></span></p>
+        <p><strong>City:</strong> <span id="city"></span></p>
+        <p><strong>State:</strong> <span id="state"></span></p>
+        <p><strong>Phone:</strong> <span id="phoneNumber"></span></p>
+        <p><strong>WhatsApp:</strong> <span id="whatsapp"></span></p>
+        <p><strong>Guardian Phone:</strong> <span id="guardianPhone"></span></p>
+
+        <h2>Education Details</h2>
+        <p><strong>High School:</strong> <span id="highschool"></span></p>
+        <p><strong>Intermediate:</strong> <span id="inter"></span></p>
+        <p><strong>Graduation:</strong> <span id="graduation"></span></p>
+
+        <h2>Course Applied</h2>
+        <p><strong>Course:</strong> <span id="course"></span></p>
+        <p><strong>Gender:</strong> <span id="gender"></span></p>
+        <p><strong>Registration Number:</strong> <span id="registrationNumber"></span></p>
+
+        <h2>Documents</h2>
+        <p><strong>Photo:</strong> <img id="photo" src="" alt="Photo"><br>
+        <p><strong>Signature:</strong> <img id="signature" src="" alt="Signature"><br>
+        <p><strong>Documents:</strong> <span id="documents"></span></p>
+    </div>
+
+    <script>
+        // JavaScript to populate the success page with user data
+        document.addEventListener("DOMContentLoaded", () => {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData) {
+                document.getElementById('fullName').textContent = userData.fullName;
+                document.getElementById('fatherName').textContent = userData.fatherName;
+                document.getElementById('email').textContent = userData.email;
+                document.getElementById('address').textContent = userData.address;
+                document.getElementById('city').textContent = userData.city;
+                document.getElementById('state').textContent = userData.state;
+                document.getElementById('phoneNumber').textContent = userData.phoneNumber;
+                document.getElementById('whatsapp').textContent = userData.whatsapp;
+                document.getElementById('guardianPhone').textContent = userData.guardianPhone;
+                document.getElementById('highschool').textContent = userData.highschool;
+                document.getElementById('inter').textContent = userData.inter;
+                document.getElementById('graduation').textContent = userData.graduation;
+                document.getElementById('course').textContent = userData.course;
+                document.getElementById('gender').textContent = userData.gender;
+                document.getElementById('registrationNumber').textContent = userData.registrationNumber;
+                document.getElementById('photo').src = userData.photo;
+                document.getElementById('signature').src = userData.signature;
+                document.getElementById('documents').innerHTML = userData.documents.map(doc => `<a href="${doc}" target="_blank">Document</a>`).join('<br>');
+            }
+        });
+    </script>
+</body>
+</html>

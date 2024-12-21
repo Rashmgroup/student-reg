@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Step Styling */
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        .navigation-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .navigation-btns button {
+            width: 48%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            form {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .navigation-btns button {
+                width: 48%;
+            }
+        }
+
+        /* Error Message Styling */
+        input:invalid {
+            border-color: red;
+        }
+
+        input:invalid:focus {
+            border-color: #f44336;
+        }
+
+        input:valid {
+            border-color: green;
+        }
+
+        input:valid:focus {
+            border-color: #4CAF50;
+        }
+
+        #amsr {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Ensure it's behind the form */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="amsr"></div>
+    <form method="POST" action="/student" enctype="multipart/form-data">
+        <!-- Step 1: Basic Information -->
+        <div class="step active" id="step-1">
+            <h3>Basic Information</h3>
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Full Name" required><br>
+
+            <label for="fatherName">Father's Name</label>
+            <input type="text" id="fatherName" name="fatherName" placeholder="Father's Name" required><br>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email" required><br>
+
+            <div class="navigation-btns">
+                <button type="button" class="btn" onclick="nextStep(1)">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Address and Contact Information -->
+        <div class="step" id="step-2">
+            <h3>Address and Contact Information</h3>
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" placeholder="Address" required><br>
+
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" placeholder="City" required><br>
+
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" placeholder="State" required><br>
+
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required><br>
+
+            <label for="whatsapp">WhatsApp Number</label>
+            <input type="text" id="whatsapp" name="whatsapp" placeholder="WhatsApp"><br>
+
+            <label for="guardianPhone">Guardian's Phone Number</label>
+            <input type="text" id="guardianPhone" name="guardianPhone" placeholder="Guardian's Phone Number"><br>
+
+            <div class="navigation-btns">
+                <button type="button" class="btn" onclick="prevStep(2)">Back</button>
+                <button type="button" class="btn" onclick="nextStep(2)">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Education Information -->
+        <!-- Step 3: Education Information -->
+        <div class="step" id="step-3">
+            <h3>Education Information</h3>
+            <label for="highschool">High School (10th)</label>
+            <select id="highschool" name="highschool" required>
+                <option value="">Select</option>
+                <option value="Passed">Passed</option>
+                <option value="Appearing">Appearing</option>
+                <option value="N/A">N/A</option>
+            </select><br>
+
+            <label for="inter">Intermediate (12th)</label>
+            <select id="inter" name="inter" required>
+                <option value="">Select</option>
+                <option value="Passed">Passed</option>
+                <option value="Appearing">Appearing</option>
+                <option value="N/A">N/A</option>
+            </select><br>
+
+            <label for="graduation">Graduation</label>
+            <select id="graduation" name="graduation" required>
+                <option value="">Select</option>
+                <option value="Passed">Passed</option>
+                <option value="Appearing">Appearing</option>
+                <option value="N/A">N/A</option>
+            </select><br>
+
+            <label for="course">Course</label>
+            <select id="course" name="course" required onchange="showOtherCourseField()">
+                <option value="">Select Course</option>
+                <option value="BSc">BSc</option>
+                <option value="BCom">BCom</option>
+                <option value="BA">BA</option>
+                <option value="Other">Other</option>
+            </select><br>
+
+            <!-- New field for 'Other' course choice -->
+            <div id="otherCourseField" style="display: none;">
+                <label for="OtherCourse">Write your choice</label>
+                <input type="text" id="OtherCourse" name="OtherCourse" placeholder="Other Course">
+            </div>
+
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select><br>
+
+            <div class="navigation-btns">
+                <button type="button" class="btn" onclick="prevStep(3)">Back</button>
+                <button type="button" class="btn" onclick="nextStep(3)">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Uploads -->
+        <div class="step" id="step-4">
+            <h3>Uploads</h3>
+            <label for="photo">Upload Your Photo (Max 2MB)</label>
+            <input type="file" id="photo" name="photo" accept="image/*"><br>
+
+            <label for="signature">Upload Your Signature (Max 2MB)</label>
+            <input type="file" id="signature" name="signature" accept="image/*"><br>
+
+            <label for="documents">Upload Your Documents (10th, 12th, etc.)</label>
+            <input type="file" id="documents" name="documents" accept="application/pdf,image/*" multiple><br>
+
+            <label for="registrationNumber">Registration Number</label>
+            <input type="text" id="registrationNumber" name="registrationNumber"
+                placeholder="After Registration You Will Get" readonly><br>
+
+            <div class="navigation-btns">
+                <button type="button" class="btn" onclick="prevStep(4)">Back</button>
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </div>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tengbao/vanta@latest/dist/vanta.birds.min.js"></script>
+
+    <script>
+        VANTA.BIRDS({
+            el: "#amsr",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            backgroundColor: 0x000000 // Set background color to black for better contrast
+        });
+        document.addEventListener("DOMContentLoaded", () => {
+            let currentStep = 1;
+
+            // Function to show the current active step
+            function showStep(step) {
+                document.querySelectorAll('.step').forEach((element, index) => {
+                    element.classList.remove('active');
+                    if (index + 1 === step) {
+                        element.classList.add('active');
+                    }
+                });
+            }
+
+            // Function to go to the next step
+            window.nextStep = function (step) {
+                if (validateStep(step)) {
+                    currentStep = step + 1;
+                    showStep(currentStep);
+                }
+            };
+
+            // Function to go to the previous step
+            window.prevStep = function (step) {
+                currentStep = step - 1;
+                showStep(currentStep);
+            };
+
+            // Function to validate the current step fields
+            function validateStep(step) {
+                let valid = true;
+                const currentStepElement = document.getElementById(`step-${step}`);
+                const inputs = currentStepElement.querySelectorAll('input, select');
+
+                inputs.forEach(input => {
+                    if (input.required && !input.value) {
+                        input.setCustomValidity('This field is required');
+                        valid = false;
+                    } else {
+                        input.setCustomValidity('');
+                    }
+                });
+
+                // Validate email format if in step 1
+                if (step === 1) {
+                    const email = document.getElementById('email');
+                    if (email && !validateEmail(email.value)) {
+                        email.setCustomValidity('Please enter a valid email');
+                        valid = false;
+                    } else {
+                        email.setCustomValidity('');
+                    }
+                }
+
+                // Check if any field is invalid
+                currentStepElement.querySelectorAll('input:invalid').forEach(input => {
+                    input.classList.add('invalid');
+                });
+
+                return valid;
+            }
+
+            // Function to validate email format
+            function validateEmail(email) {
+                const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                return regex.test(email);
+            }
+
+            // Initial setup to display the first step
+            showStep(currentStep);
+        });
+        function showOtherCourseField() {
+    const courseDropdown = document.getElementById("course");
+    const otherCourseField = document.getElementById("otherCourseField");
+    if (courseDropdown.value === "Other") {
+        otherCourseField.style.display = "block";
+    } else {
+        otherCourseField.style.display = "none";
+    }
+}
+    </script>
+</body>
+
+</html>
